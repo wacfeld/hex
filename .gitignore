@@ -1,0 +1,10 @@
+*~
+*.o
+*.a
+gmon/
+sorcery
+*.d
+.*.sw?
+*.out
+tags
+\#*\#
