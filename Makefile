@@ -1,7 +1,7 @@
 CXX = g++
-CXXFLAGS = -std=c++14 -g -MMD -Wall -fcompare-debug-second -Wshadow
+CXXFLAGS = -std=c++14 -g -MMD -Wall -fcompare-debug-second -Wshadow -lSDL2main -lSDL2
 EXEC = $(shell basename $(CURDIR)).out
-OBJECTS = main.o
+OBJECTS = main.o drawer.o
 DEPENDS = ${OBJECTS:.o=.d}
 ${EXEC}: ${OBJECTS}
 	${CXX} ${OBJECTS} ${CXXFLAGS} -o ${EXEC}
