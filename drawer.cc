@@ -9,6 +9,9 @@ const float side_len = 30;
 const int SCREEN_WIDTH = 1200;
 const int SCREEN_HEIGHT = 700;
 
+const float tlX = 100;
+const float tlY = 100;
+
 //The window we'll be rendering to
 SDL_Window* gwin = NULL;
 
@@ -20,23 +23,88 @@ float side2height(int s)
 //The window renderer
 SDL_Renderer* grend = NULL;
 
-void drawPiece(Piece p, int r, int c)
+void getCenter(int r, int c, int &x, int &y)
 {
-  static float tlX = 100;
-  static float tlY = 100;
+  float height = side2height(side_len);
+  x = tlX + r*2*height + c*height;
+  y = tlY + c*1.5*side_len;
+}
+
+float deg2rad(float deg)
+{
+  const static float pi = 3.14159265358;
+  return deg*pi/180;
+}
+
+void rotate(int &x, int &y, float deg)
+{
+  int th = deg2rad(deg);
+  int nX = x*cos(th) - y*sin(th);
+  int nY = x*sin(th) + y*cos(th);
+  x = nX;
+  y = nY;
+}
+
+bool inHex(int x, int y, int r, int c)
+{
+  int cX, cY;
+  getCenter(r, c, cX, cY);
+
+  int rX = x-cX;
+  int rY = y-cY;
 
   float height = side2height(side_len);
   
-  int x = tlX + r*2*height + c*height;
-  int y = tlY + c*1.5*side_len;
+  if((rX > height) || (rX < -height))
+  {
+    return false;
+  }
 
+  int nX=rX, nY=rY;
+  rotate(nX, nY, 60);
+  if((nX > height) || (nX < -height))
+  {
+    return false;
+  }
+
+  nX=rX, nY=rY;
+  rotate(nX, nY, -60);
+  if((nX > height) || (nX < -height))
+  {
+    return false;
+  }
+
+  return true;
+}
+
+Coord getCoord(int x, int y)
+{
+  for(int r = 0; r < board_size; r++)
+  {
+    for(int c = 0; c < board_size; c++)
+    {
+      if(inHex(x, y, r, c))
+      {
+        return Coord{r,c};
+      }
+    }
+  }
+
+  return Coord{-1,-1};
+}
+
+void drawPiece(Piece p, int r, int c)
+{
+  int x, y;
+  getCenter(r, c, x, y);
+  
   SDL_Color col;
   if(p == RED) {
     col = SDL_Color{ 255, 0, 0, 255 };
   } else if(p == GREEN) {
     col = SDL_Color{ 0, 255, 0, 255 };
   } else {
-    col = SDL_Color{ 0, 0, 0, 255 };
+    col = SDL_Color{ 255, 255, 255, 255 };
   }
 
   drawHex(side_len*.99, x, y, col);

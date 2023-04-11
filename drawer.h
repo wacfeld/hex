@@ -17,6 +17,7 @@ extern const float side_len;
 extern SDL_Window *gwin;
 extern SDL_Renderer *grend;
 
+Coord getCoord(int x, int y);
 void drawHex(float side, float x, float y, SDL_Color col);
 void drawPiece(Piece p, int r, int c);
 
