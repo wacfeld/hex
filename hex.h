@@ -9,6 +9,11 @@ struct Coord
 
 enum Piece {BLANK, RED, GREEN};
 
+Piece opp(Piece p);
+
+Piece get(Coord co);
+void set(Coord co, Piece p);
+
 const int board_size = 8;
 extern Piece board[board_size][board_size];
 

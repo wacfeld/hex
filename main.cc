@@ -30,9 +30,12 @@ int main( int argc, char* args[] )
     for(int c = 0; c < board_size; c++)
     {
       drawPiece(BLANK, r, c);
+      set({r,c}, BLANK);
     }
   }
   update();
+
+  Piece cur = RED;
 
 	//While application is running
 	while( !quit )
@@ -46,16 +49,20 @@ int main( int argc, char* args[] )
 				quit = true;
 			}
 
-			else if(e.type == SDL_MOUSEBUTTONDOWN)
+			else if(e.type == SDL_MOUSEBUTTONUP)
 			{
 			  Coord co = getCoord(e.button.x, e.button.y);
-			  if(co.r == -1)
+			  printf("hi\n");
+			  if(co.r != -1)
 			  {
-			    printf("out of bounds\n");
-			  }
-			  else
-			  {
-			    printf("%d %d\n", co.r, co.c);
+			    printf("%d\n", get(co));
+			    if(get(co) == BLANK)
+			    {
+			      set(co, cur);
+			      drawPiece(cur, co.r, co.c);
+			      update();
+			      cur = opp(cur);
+			    }
 			  }
 			}
 		}
