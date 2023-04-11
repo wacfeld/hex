@@ -26,8 +26,8 @@ SDL_Renderer* grend = NULL;
 void getCenter(int r, int c, int &x, int &y)
 {
   float height = side2height(side_len);
-  x = tlX + r*2*height + c*height;
-  y = tlY + c*1.5*side_len;
+  x = tlX + c*2*height + r*height;
+  y = tlY + r*1.5*side_len;
 }
 
 float deg2rad(float deg)

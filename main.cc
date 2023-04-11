@@ -36,7 +36,7 @@ int main( int argc, char* args[] )
   update();
 
   Piece cur = RED;
-
+  
 	//While application is running
 	while( !quit )
 	{
