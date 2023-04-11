@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "drawer.h"
+#include "hex.h"
 
 int main( int argc, char* args[] )
 {
@@ -24,7 +25,19 @@ int main( int argc, char* args[] )
 	//Event handler
 	SDL_Event e;
 
-  drawHex(100, 200, SDL_Color{ 0, 255, 0, 255 });
+  // for(int x = 0; x < board_size; x++)
+  // {
+  //   drawHex(side, 100, 200, 
+  // }
+
+  // drawHex(side, 100, 200, SDL_Color{ 0, 255, 0, 255 });
+  for(int r = 0; r < board_size; r++)
+  {
+    for(int c = 0; c < board_size; c++)
+    {
+      drawPiece(RED, r, c);
+    }
+  }
   update();
 
 	//While application is running

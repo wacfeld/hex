@@ -1,22 +1,51 @@
 #include <vector>
 
 #include "drawer.h"
+#include "hex.h"
+
+const float side_len = 30;
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 1200;
+const int SCREEN_HEIGHT = 700;
 
 //The window we'll be rendering to
 SDL_Window* gwin = NULL;
 
+float side2height(int s)
+{
+  return s * 0.866025;
+}
+
 //The window renderer
 SDL_Renderer* grend = NULL;
 
-// https://stackoverflow.com/questions/69447778/fastest-way-to-draw-filled-quad-triangle-with-the-sdl2-renderer
-void drawHex(float x, float y, SDL_Color col)
+void drawPiece(Piece p, int r, int c)
 {
-  const float side = 30;
-  const float height = 0.866025 * side;
+  static float tlX = 100;
+  static float tlY = 100;
+
+  float height = side2height(side_len);
+  
+  int x = tlX + r*2*height + c*height;
+  int y = tlY + c*1.5*side_len;
+
+  SDL_Color col;
+  if(p == RED) {
+    col = SDL_Color{ 255, 0, 0, 255 };
+  } else if(p == GREEN) {
+    col = SDL_Color{ 0, 255, 0, 255 };
+  } else {
+    col = SDL_Color{ 0, 0, 0, 255 };
+  }
+
+  drawHex(side_len*.99, x, y, col);
+}
+
+// https://stackoverflow.com/questions/69447778/fastest-way-to-draw-filled-quad-triangle-with-the-sdl2-renderer
+void drawHex(float side, float x, float y, SDL_Color col)
+{
+  float height = side2height(side);
   
   SDL_Vertex verts[12] =
   {

@@ -1,5 +1,6 @@
 #ifndef DRAWER_H
 #define DRAWER_H
+#include "hex.h"
 
 extern const int SCREEN_WIDTH;
 extern const int SCREEN_HEIGHT;
@@ -11,10 +12,13 @@ extern const int SCREEN_HEIGHT;
 #include <string>
 #include <cmath>
 
+extern const float side_len;
+
 extern SDL_Window *gwin;
 extern SDL_Renderer *grend;
 
-void drawHex(float x, float y, SDL_Color col);
+void drawHex(float side, float x, float y, SDL_Color col);
+void drawPiece(Piece p, int r, int c);
 
 void update();
 
